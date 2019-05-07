@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="0: last_git_commit" time="0.012724936">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: gradle" time="1.267805789">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="2: gradle" time="5.206880942">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: Switch to android fabric lane" time="0.00050529">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: crashlytics" time="6.471253537">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="5: Switch to android notify_CW lane" time="0.000561944">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="6: chatwork" time="0.290705067">
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>

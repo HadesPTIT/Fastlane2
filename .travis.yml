@@ -1,0 +1,46 @@
+language: android
+jdk: oraclejdk8
+sudo: required
+
+android:
+  components:
+  - tools
+  - platform-tools
+  - tools
+  # The BuildTools version used by your project
+  - build-tools-26.0.2
+  # The SDK version used to compile your project
+  - android-26
+  # Additional components
+  - extra-google-google_play_services
+  - extra-google-m2repository
+  - extra-android-m2repository
+  - addon-google_apis-google-26
+  - extra-android-support
+
+  # By default, Travis CI will accept all the requested licenses
+  # It is also possible to define a white list of licenses to be accepted
+  # Uncomment the lines below if you want to accept all
+  #  licenses:
+  #    - android-sdk-preview-license-.+
+  #    - android-sdk-license-.+
+  #    - google-gdk-license-.+
+
+
+before_install:
+- gem update --system
+- gem install fastlane --no-document --quiet
+- chmod +x gradlew
+- yes | sdkmanager "platforms;android-28"
+
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+directories:
+- $HOME/.gradle/caches/
+- $HOME/.gradle/wrapper/
+- $HOME/.android/build-cache
+
+script:
+- bundle exec fastlane android debug branch:113_base_travis_fastlane
