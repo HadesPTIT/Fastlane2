@@ -73,6 +73,15 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold"/>
 
+            <TextView
+                android:id="@+id/tv_result"
+                android:textStyle="bold"
+                android:textColor="@android:color/holo_green_dark"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
