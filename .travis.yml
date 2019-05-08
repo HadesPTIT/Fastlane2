@@ -60,10 +60,19 @@ before_script:
 - android list targets | grep -E '^id:' | awk -F '"' '{$1=""; print $2}' # list all targets
 - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
 #- emulator -?
-- emulator -avd test -no-skin -no-audio -no-window -engine classic &
+- emulator -avd test -no-audio -no-window -engine classic &
 - android-wait-for-emulator
+- adb shell settings put global window_animation_scale 0 &
+- adb shell settings put global transition_animation_scale 0 &
+- adb shell settings put global animator_duration_scale 0 &
 - adb shell input keyevent 82 &
 
 script:
-- ./gradlew connectedAndroidTest
-- bundle exec fastlane android debug branch:121_travis_ui_emulator
+- ./gradlew test # Run unit tests
+- ./gradlew connectedAndroidTest # Run Instrumentation tests
+
+# (&&) This will fails immediately when ./gradlew test failed
+# so ./gradlew connectedAndroidTest will not be executed
+#- ./gradlew test && ./gradlew connectedAndroidTest
+
+- bundle exec fastlane android debug branch:123_travis_ui_emulator
