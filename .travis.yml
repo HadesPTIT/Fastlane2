@@ -42,5 +42,12 @@ directories:
 - $HOME/.gradle/wrapper/
 - $HOME/.android/build-cache
 
+#jobs:
+#  include:
+#  - stage: unitTests
+#    script: - bundle exec fastlane android debug branch:113_base_travis_fastlane
+#  - stage: buildDebug
+#    script: - bundle exec fastlane android debug branch:115_base_travis_fastlane
+
 script:
-- bundle exec fastlane android debug branch:113_base_travis_fastlane
+  - bundle exec fastlane android debug branch:115_base_travis_fastlane
