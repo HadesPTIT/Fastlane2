@@ -1,6 +1,6 @@
 language: android
 jdk: oraclejdk8
-sudo: required
+#sudo: required
 
 android:
   components:
@@ -17,6 +17,11 @@ android:
   - extra-android-m2repository
   - addon-google_apis-google-26
   - extra-android-support
+
+  # Specify at least one system image,
+  # if you need to run emulator(s) during your tests
+  - android-24 # Android platform used by your alternative emulator
+  - sys-img-armeabi-v7a-android-24
 
   # By default, Travis CI will accept all the requested licenses
   # It is also possible to define a white list of licenses to be accepted
@@ -49,5 +54,25 @@ directories:
 #  - stage: buildDebug
 #    script: - bundle exec fastlane android debug branch:115_base_travis_fastlane
 
+before_script:
+- echo "y" | android update sdk -a --no-ui --filter android-24
+- echo "y" | android update sdk -a --no-ui --filter sys-img-armeabi-v7a-android-24
+- android list targets | grep -E '^id:' | awk -F '"' '{$1=""; print $2}' # list all targets
+- echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
+#- emulator -?
+- emulator -avd test -no-audio -no-window -engine classic &
+- android-wait-for-emulator
+- adb shell settings put global window_animation_scale 0 &
+- adb shell settings put global transition_animation_scale 0 &
+- adb shell settings put global animator_duration_scale 0 &
+- adb shell input keyevent 82 &
+
 script:
-  - bundle exec fastlane android debug branch:115_base_travis_fastlane
+- ./gradlew test # Run unit tests
+- ./gradlew connectedAndroidTest # Run Instrumentation tests
+
+# (&&) This will fails immediately when ./gradlew test failed
+# so ./gradlew connectedAndroidTest will not be executed
+#- ./gradlew test && ./gradlew connectedAndroidTest
+
+- bundle exec fastlane android debug branch:123_travis_ui_emulator
